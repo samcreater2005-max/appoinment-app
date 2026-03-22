@@ -1,0 +1,23 @@
+The search input is tokenized into words and matched against combined doctor attributes like name, speciality and location using JavaScript filtering.”
+
+“We implemented dynamic filtering using React state and query parameters. Speciality links pass search queries to the doctors page using React Router.”
+
+When user logs in
+
+Your login code saves:
+
+localStorage.setItem("user", JSON.stringify(data));
+
+Navbar detects it:
+
+const storedUser = localStorage.getItem("user");
+
+Then shows:
+
+Logout button
+When user logs out
+localStorage.removeItem("user");
+
+Navbar changes back to:
+
+Login | Register
