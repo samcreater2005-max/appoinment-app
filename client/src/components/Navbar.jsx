@@ -1,33 +1,44 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 function Navbar() {
 
 const navigate = useNavigate();
+
 const [user,setUser] = useState(null);
+const [doctor,setDoctor] = useState(null);
 
 useEffect(()=>{
 
 const storedUser = localStorage.getItem("user");
+const storedDoctor = localStorage.getItem("doctor");
 
 if(storedUser){
 setUser(JSON.parse(storedUser));
 }
 
+if(storedDoctor){
+setDoctor(JSON.parse(storedDoctor));
+}
+
 },[]);
 
-const handleLogout = ()=>{
+
+const logout = ()=>{
 
 localStorage.removeItem("user");
+localStorage.removeItem("doctor");
+
 setUser(null);
-navigate("/");
+setDoctor(null);
+
+navigate("/login");
 
 };
 
 return(
-//this line to fix navbar
-<nav className="navbar navbar-expand-lg navbar-light bg-light shadow-sm fixed-top"> 
-    
+
+<nav className="navbar navbar-expand-lg navbar-light bg-light shadow-sm fixed-top">
 
 <div className="container">
 
@@ -49,32 +60,31 @@ Doctors
 My Appointments
 </Link>
 
-{user ? (
 
-<button className="btn btn-danger" onClick={handleLogout}>
-Logout
-</button>
-
-) : (
+{!user && !doctor && (
 
 <>
 
 <Link className="btn btn-outline-primary me-2" to="/login">
-Patient Login
+Login
 </Link>
 
 <Link className="btn btn-primary me-2" to="/register">
-Patient Register
+Register
 </Link>
 
-<Link className="btn btn-dark" to="/doctor-login">
-Doctor Login
-</Link>
-
-<Link className="btn btn-dark" to="/doctor-register">
-Doctor Register
-</Link>
 </>
+
+)}
+
+{(user || doctor) && (
+
+<button
+className="btn btn-danger"
+onClick={logout}
+>
+Logout
+</button>
 
 )}
 
